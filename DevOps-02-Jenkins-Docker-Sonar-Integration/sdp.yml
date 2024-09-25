@@ -1,0 +1,4 @@
+dockerCredentialsId: docker
+serviceName: devops-jenkins-docker-integration
+appVersion: 1.0.0-SNAPSHOT
+dockerRegistry: https://hub.docker.com/

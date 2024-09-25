@@ -1,0 +1,55 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.1'
+	id 'io.spring.dependency-management' version '1.1.5'
+	id 'jacoco'
+	id 'org.sonarqube' version '4.0.0.2929'
+}
+
+group = 'com.devops'
+version = project.hasProperty('version') ? version : '1.0.0-snapshot'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+	reports {
+		xml.required = true
+		csv.required = false
+		html.outputLocation = file("${buildDir}/jacocoHtml")
+	}
+}
+
+jacoco {
+	toolVersion = "0.8.8"
+
+}
+
+sonarqube {
+	properties {
+		property "sonar.projectKey", "springboot-rest-api"
+		property "sonar.host.url", "http://localhost:9000"
+		property "sonar.login", "squ_05f57d1e2165dc391ff2fe489cf6cd5b44c4649b"
+	}
+}
+
